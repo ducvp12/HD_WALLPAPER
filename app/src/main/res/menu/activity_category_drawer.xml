@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_latest"
+            android:icon="@drawable/lates"
+            android:title="@string/menu_latest" />
+        <item
+            android:id="@+id/nav_category"
+            android:icon="@drawable/open"
+            android:title="@string/menu_category" />
+        <item
+            android:id="@+id/nav_GIFs"
+            android:icon="@drawable/gif"
+            android:title="@string/menu_gifs" />
+        <item
+            android:id="@+id/nav_heart"
+            android:icon="@drawable/heart"
+            android:title="@string/menu_heart" />
+        <item
+            android:id="@+id/nav_rateapp"
+            android:icon="@drawable/rating"
+            android:title="@string/menu_rate" />
+        <item
+            android:id="@+id/nav_more"
+            android:icon="@drawable/viewmore"
+            android:title="@string/menu_viewmore" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/infor"
+            android:title="@string/menu_about" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/setting"
+            android:title="@string/menu_setting" />
+        <item
+            android:id="@+id/nav_privacy"
+            android:icon="@drawable/privacy"
+            android:title="@string/menu_privacy" />
+    </group>
+
+
+
+
+</menu>

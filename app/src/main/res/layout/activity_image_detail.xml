@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ImageDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/apb"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    tools:ignore="MissingConstraints">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/leftarrow" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="Image Detail"
+            android:textColor="#fff"
+
+            android:textSize="30dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+</com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:srcCompat="@drawable/anhnend" />
+
+        <ImageView
+            android:id="@+id/x"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            android:layout_alignEnd="@+id/imageView2"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/icon_heart_in_grid_view"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/Setas"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/eye_icon_grid_view"
+            app:layout_constraintBottom_toTopOf="@+id/x"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/save_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/icon_heart_in_grid_view"
+            app:layout_constraintBottom_toTopOf="@+id/Setas"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
