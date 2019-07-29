@@ -114,6 +114,10 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
             Intent intent=new Intent(LatestActivity.this,AboutUsActivity.class);
             startActivity(intent);
             finish();
+        } else if (id == R.id.nav_more) {
+            Intent intent=new Intent(LatestActivity.this,HomeActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
