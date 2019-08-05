@@ -2,12 +2,12 @@ package com.example.asshoanthien.dnhonthin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,18 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.asshoanthien.dnhonthin.ItemClickListener;
 import com.example.asshoanthien.dnhonthin.LatestActivity;
 import com.example.asshoanthien.dnhonthin.R;
-import com.example.asshoanthien.dnhonthin.model.ModelCatagory;
+import com.example.asshoanthien.dnhonthin.model.model_embed.WpFeaturedmedium_;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHolder> {
 
-    private List<ModelCatagory> modelCatagoryList;
+    private List<WpFeaturedmedium_> modelWp;
+
+
 
     Context context;
-    public AdapterCategory(List<ModelCatagory> modelCatagoryList, Context context) {
-        this.modelCatagoryList = modelCatagoryList;
+    public AdapterCategory(List<WpFeaturedmedium_> modelWp, Context context) {
+        this.modelWp = modelWp;
         this.context=context;
+
     }
 
 
@@ -41,8 +45,13 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ModelCatagory md = modelCatagoryList.get(i);
-        viewHolder.tvTitle.setText(md.getTvTitle());
+        WpFeaturedmedium_ md = modelWp.get(i);
+
+
+        viewHolder.tvTitle.setText(md.getId()+"");
+        Picasso.with(context).load(md.getSourceUrl()).into(viewHolder.banner);
+        Log.e("hih",md.getId()+ "");
+
         viewHolder.banner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,23 +59,24 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
                 context.startActivity(intent);
             }
         });
-      viewHolder.setItemClickListener(new ItemClickListener() {
-          @Override
-          public void onClick(View view, int position, boolean isLongClick) {
-              if(isLongClick)
-                  Toast.makeText(context, "Long Click: ", Toast.LENGTH_SHORT).show();
-              else
-                  Toast.makeText(context, " "+position, Toast.LENGTH_SHORT).show();
-              Intent intent=new Intent(context, LatestActivity.class);
-              context.startActivity(intent);
 
-          }
-      });
+//      viewHolder.setItemClickListener(new ItemClickListener() {
+//          @Override
+//          public void onClick(View view, int position, boolean isLongClick) {
+//              if(isLongClick)
+//                  Toast.makeText(context, "Long Click: ", Toast.LENGTH_SHORT).show();
+//              else
+//                  Toast.makeText(context, " "+position, Toast.LENGTH_SHORT).show();
+//              Intent intent=new Intent(context, LatestActivity.class);
+//              context.startActivity(intent);
+//
+//          }
+//      });
     }
 
     @Override
     public int getItemCount() {
-        return modelCatagoryList.size();
+        return modelWp.size();
     }
 
 

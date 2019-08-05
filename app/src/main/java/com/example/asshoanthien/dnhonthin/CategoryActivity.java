@@ -2,6 +2,7 @@ package com.example.asshoanthien.dnhonthin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,36 +14,53 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterCategory;
-import com.example.asshoanthien.dnhonthin.model.ModelCatagory;
+import com.example.asshoanthien.dnhonthin.model.model_embed.WpFeaturedmedium_;
+import com.example.asshoanthien.dnhonthin.retrofit.Hdwallpaper_Retrofit;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CategoryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    int _embedded;
+    LinearLayoutManager linearLayoutManager;
     private RecyclerView mRvCate;
-    private List<ModelCatagory> modelCatagoryList;
+    private List<WpFeaturedmedium_> wpFeaturedmedium_list;
+
+
     private AdapterCategory adapterCategory;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-
         mRvCate = findViewById(R.id.rv);
-        modelCatagoryList = new ArrayList<>();
-
-        for (int i = 0; i < 100; i++) {
-            modelCatagoryList.add(new ModelCatagory("", "Flower " + "(" + i + ")"));
-        }
-
-        adapterCategory = new AdapterCategory(modelCatagoryList,this);
-        mRvCate.setAdapter(adapterCategory);
+        wpFeaturedmedium_list = new ArrayList<>();
+        adapterCategory = new AdapterCategory(wpFeaturedmedium_list,this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        mRvCate.setHasFixedSize(true);
         mRvCate.setLayoutManager(manager);
 
+        Hdwallpaper_Retrofit.getInstance().getCate(_embedded).enqueue(new Callback<List<WpFeaturedmedium_>>() {
+            @Override
+            public void onResponse(Call<List<WpFeaturedmedium_>> call, Response<List<WpFeaturedmedium_>> response) {
+                wpFeaturedmedium_list=response.body();
+                adapterCategory=new AdapterCategory(wpFeaturedmedium_list,CategoryActivity.this);
+                Log.e("ahahaa", response.body().toString());
+                mRvCate.setAdapter(adapterCategory);
+            }
+
+            @Override
+            public void onFailure(Call<List<WpFeaturedmedium_>> call, Throwable t) {
+
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -128,4 +146,89 @@ public class CategoryActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+//    public void getData(int _embedded){
+//        Hdwallpaper_Retrofit.getInstance().getCate(_embedded)
+//                .enqueue(new Callback<List<WpFeaturedmedium_>>() {
+//                    @Override
+//                    public void onResponse(Call<List<WpFeaturedmedium_>> call, Response<List<WpFeaturedmedium_>> response) {
+//                        Toast.makeText(CategoryActivity .this, response.body().size() + "", Toast.LENGTH_SHORT).show();
+//
+//                       wpFeaturedmedium_list=response.body();
+//                       adapterCategory=new AdapterCategory(wpFeaturedmedium_list,CategoryActivity.this);
+//                       mRvCate.setAdapter(adapterCategory);
+//                        adapterCategory.notifyDataSetChanged();
+//                        Log.e("haha",response.body()+"");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<WpFeaturedmedium_>> call, Throwable t) {
+//
+//                    }
+//                });
+//
+//
+//    }
+
+
+//    private void writeRecycler(String response){
+//
+//        try {
+//            JSONArray jsonArray = new JSONArray(response);
+//            //ArrayList<category> exampleList = new ArrayList<>();
+//
+//
+//            for(int i=0 ; i<jsonArray.length();i++){
+//
+//
+//
+//                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                JSONObject title = jsonObject.getJSONObject("title");
+//
+//                String rendered = title.getString("rendered");
+//                Log.d("oo", String.valueOf(jsonArray));
+//                Log.d("gggggg", String.valueOf(jsonObject));
+//
+//                JSONObject jsonObjectE = jsonObject.getJSONObject("_embedded");
+//                Log.d("kk", String.valueOf(jsonObjectE));
+//
+//                JSONArray jsonArray1 = jsonObjectE.getJSONArray("wp:featuredmedia");
+//                Log.d("hhhhhh", String.valueOf(jsonArray1));
+//
+//                for(int j=0 ; j<jsonArray1.length();j++) {
+//                    JSONObject jsonObjectA = jsonArray1.getJSONObject(j);
+//                    Log.d("cccc", String.valueOf(jsonObjectA));
+//
+//                    String source_url = jsonObjectA.getString("source_url");
+//
+//
+//
+//                    wpFeaturedmedium_list.add(new WpFeaturedmedium_(source_url));
+//                    Log.d("sourcURL ", source_url);
+//                    Log.d("fffff ", String.valueOf(wpFeaturedmedium_list));
+//
+//
+//
+//                }
+//
+//
+//
+//
+//                mRvCate.setHasFixedSize(true);
+//
+//
+//
+//
+//            }
+//
+//
+//
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
 }

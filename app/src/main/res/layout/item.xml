@@ -20,7 +20,7 @@
         android:layout_margin="10dp"
         android:layout_gravity="bottom"
         android:textSize="24sp"
-        android:textColor="#FFFFFF"
+        android:textColor="#B60C0C"
         android:text="@string/animals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
