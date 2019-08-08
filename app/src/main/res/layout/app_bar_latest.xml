@@ -26,7 +26,7 @@
         <!--<include layout="@layout/content_category" />-->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvlatests"
+            android:id="@+id/rvlatests2"
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"

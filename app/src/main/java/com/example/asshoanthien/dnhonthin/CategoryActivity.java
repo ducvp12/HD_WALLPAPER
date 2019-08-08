@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,9 +13,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterCategory;
-import com.example.asshoanthien.dnhonthin.model.model_embed.WpFeaturedmedium_;
+import com.example.asshoanthien.dnhonthin.adapter.CateAdapter;
+import com.example.asshoanthien.dnhonthin.model.model_cate.Category;
 import com.example.asshoanthien.dnhonthin.retrofit.Hdwallpaper_Retrofit;
 import com.google.android.material.navigation.NavigationView;
 
@@ -29,38 +32,66 @@ public class CategoryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     int _embedded;
     LinearLayoutManager linearLayoutManager;
-    private RecyclerView mRvCate;
-    private List<WpFeaturedmedium_> wpFeaturedmedium_list;
 
 
+    private int page = 1;
+    private int per_page = 5;
+    SwipeRefreshLayout mf5;
     private AdapterCategory adapterCategory;
+
+    private RecyclerView lvList;
+    SwipeRefreshLayout f5;
+    List<Category>   categories;
+    CateAdapter cateAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        mRvCate = findViewById(R.id.rv);
-        wpFeaturedmedium_list = new ArrayList<>();
-        adapterCategory = new AdapterCategory(wpFeaturedmedium_list,this);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        mRvCate.setHasFixedSize(true);
-        mRvCate.setLayoutManager(manager);
+        f5 = (SwipeRefreshLayout) findViewById(R.id.f5);
+        lvList = (RecyclerView) findViewById(R.id.rv);
+        categories=new ArrayList<>();
+        cateAdapter=new CateAdapter(this,categories);
+        linearLayoutManager=new LinearLayoutManager(this);
+        lvList.setAdapter(cateAdapter);
+        lvList.setLayoutManager(linearLayoutManager);
 
-        Hdwallpaper_Retrofit.getInstance().getCate(_embedded).enqueue(new Callback<List<WpFeaturedmedium_>>() {
+
+        f5.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(Call<List<WpFeaturedmedium_>> call, Response<List<WpFeaturedmedium_>> response) {
-                wpFeaturedmedium_list=response.body();
-                adapterCategory=new AdapterCategory(wpFeaturedmedium_list,CategoryActivity.this);
-                Log.e("ahahaa", response.body().toString());
-                mRvCate.setAdapter(adapterCategory);
-            }
-
-            @Override
-            public void onFailure(Call<List<WpFeaturedmedium_>> call, Throwable t) {
-
+            public void onRefresh() {
+                //lay du lieu
+                page=1;
+                categories.clear();
+                getData(page,per_page);
             }
         });
+
+        lvList.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page=page+1;
+                getData(page,per_page);
+            }
+        });
+
+
+
+//        Hdwallpaper_Retrofit.getInstance().getCate(_embedded).enqueue(new Callback<List<WpFeaturedmedium_>>() {
+//            @Override
+//            public void onResponse(Call<List<WpFeaturedmedium_>> call, Response<List<WpFeaturedmedium_>> response) {
+//                wpFeaturedmedium_list=response.body();
+//                adapterCategory=new AdapterCategory(wpFeaturedmedium_list,CategoryActivity.this);
+//                Log.e("ahahaa", response.body().toString());
+//                mRvCate.setAdapter(adapterCategory);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<WpFeaturedmedium_>> call, Throwable t) {
+//
+//            }
+//        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,6 +111,36 @@ public class CategoryActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
+public void getData(int page, int per_page){
+    Hdwallpaper_Retrofit.getInstance().getCategpries(page, per_page)
+            .enqueue(new Callback<List<Category>>() {
+                @Override
+                public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                    Toast.makeText(CategoryActivity.this, response.body().size() + "", Toast.LENGTH_SHORT).show();
+
+                    categories.addAll(response.body());
+                    cateAdapter.notifyDataSetChanged();
+                    Log.e("hahahaha",categories+"");
+                    f5.setRefreshing(false);
+                }
+
+                @Override
+                public void onFailure(Call<List<Category>> call, Throwable t) {
+
+                }
+            });
+
+}
 
     @Override
     public void onBackPressed() {

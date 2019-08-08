@@ -2,6 +2,7 @@ package com.example.asshoanthien.dnhonthin.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asshoanthien.dnhonthin.ImageDetailActivity;
 import com.example.asshoanthien.dnhonthin.R;
-import com.example.asshoanthien.dnhonthin.model.ModelLatest;
+import com.example.asshoanthien.dnhonthin.model.modelLatest.Latestt;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder> {
-    private List<ModelLatest> modelLatestList;
+    private List<Latestt> modelLatestList;
     Context context;
-    public AdapterLatest(List<ModelLatest> modelLatestList,Context context) {
+    public AdapterLatest(List<Latestt> modelLatestList, Context context) {
         this.modelLatestList = modelLatestList;
         this.context = context;
     }
+
+
+
 
     @NonNull
     @Override
@@ -32,14 +37,28 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ModelLatest md = modelLatestList.get(i);
-        viewHolder.tvCOuntHeart.setText(md.getTvCountHeart());
-        viewHolder.tvCountEye.setText(md.getTvCountEye());
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+       context = viewHolder.itemView.getContext();
+//        ModelLatest md = modelLatestList.get(i);
+//        Post mdd = load.get(i);
+//        viewHolder.tvCOuntHeart.setText(md.getTvCountHeart());
+//        viewHolder.tvCountEye.setText(md.getTvCountEye());
+        if (modelLatestList !=null) {
+            Latestt post = modelLatestList.get(i);
+            Picasso.with(context).load(post.getGuid().getRendered()).into(viewHolder.imgContent);
+            Log.e("lala",post.getGuid().getRendered()+"");
+        }
+
+        //                      .getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getMediumLarge().getSourceUrl()
+//        Log.e("img", ""+ load.get(i).getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getLarge().getSourceUrl());
+
+//        load.get(i).getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getLarge();
+
         viewHolder.imgContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, ImageDetailActivity.class);
+                Intent intent = new Intent(context,ImageDetailActivity.class);
+                intent.putExtra("position",i);
                 context.startActivity(intent);
             }
         });
@@ -68,4 +87,5 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
 
         }
     }
+
 }

@@ -15,19 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.asshoanthien.dnhonthin.ItemClickListener;
 import com.example.asshoanthien.dnhonthin.LatestActivity;
 import com.example.asshoanthien.dnhonthin.R;
-import com.example.asshoanthien.dnhonthin.model.model_embed.WpFeaturedmedium_;
-import com.squareup.picasso.Picasso;
+import com.example.asshoanthien.dnhonthin.model.model_cate.Category;
 
 import java.util.List;
 
 public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHolder> {
 
-    private List<WpFeaturedmedium_> modelWp;
+    private List<Category> modelWp;
 
 
 
     Context context;
-    public AdapterCategory(List<WpFeaturedmedium_> modelWp, Context context) {
+    public AdapterCategory(List<Category> modelWp, Context context) {
         this.modelWp = modelWp;
         this.context=context;
 
@@ -45,12 +44,12 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        WpFeaturedmedium_ md = modelWp.get(i);
+        Category md = modelWp.get(i);
 
 
-        viewHolder.tvTitle.setText(md.getId()+"");
-        Picasso.with(context).load(md.getSourceUrl()).into(viewHolder.banner);
-        Log.e("hih",md.getId()+ "");
+        viewHolder.tvTitle.setText(md.getName());
+        viewHolder.tvsl.setText("("+md.getCount()+")");
+        Log.e("kaka",md.getName()+"");
 
         viewHolder.banner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,13 +83,14 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         private ImageView banner;
-        private TextView tvTitle;
+        private TextView tvTitle,tvsl;
         private ItemClickListener itemClickListener;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             banner = (ImageView) itemView.findViewById(R.id.imgBanner);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            tvsl=itemView.findViewById(R.id.tvslcate);
         }
 
             public void setItemClickListener(ItemClickListener itemClickListener) {

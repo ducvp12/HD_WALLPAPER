@@ -2,6 +2,7 @@ package com.example.asshoanthien.dnhonthin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -14,35 +15,57 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterLatest;
-import com.example.asshoanthien.dnhonthin.model.ModelLatest;
+import com.example.asshoanthien.dnhonthin.model.modelLatest.Latestt;
+import com.example.asshoanthien.dnhonthin.retrofit.Hdwallpaper_Retrofit;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LatestActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView mRvCate;
-    private List<ModelLatest> modelLatests;
+     List<Latestt> modelLatests;
     private AdapterLatest adapterLatest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latest);
+        mRvCate=findViewById(R.id.rvlatests2);
+        modelLatests=new ArrayList<>();
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        adapterLatest = new AdapterLatest(modelLatests,LatestActivity.this);
+        mRvCate.setAdapter(adapterLatest);
+        mRvCate.setLayoutManager((new GridLayoutManager(this, 2)));
 
-        mRvCate = findViewById(R.id.rvlatests);
-        modelLatests = new ArrayList<>();
+        Hdwallpaper_Retrofit.getInstance().getSourceUrl().enqueue(new Callback<List<Latestt>>() {
+            @Override
+            public void onResponse(Call<List<Latestt>> call, Response<List<Latestt>> response) {
+                Log.e("code", "" + response.code());
+                if (response.code() == 200) {
+                    if (response.body() == null) return;
+                    modelLatests.addAll(response.body());
+                    adapterLatest.notifyDataSetChanged();
+ //                   Log.e("abcde", "onResponse: " + response.body().get(0).getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getMediumLarge().getSourceUrl());
+                }
+            }
+            // ok
+            @Override
+            public void onFailure(Call<List<Latestt>> call, Throwable t) {
 
-        for (int i = 0; i < 100; i++) {
-            modelLatests.add(new ModelLatest("", "", "", i + "", i + ""));
-        }
-        GridLayoutManager layoutManager=new GridLayoutManager(LatestActivity.this,2);
-        adapterLatest = new AdapterLatest(modelLatests,this);
-         mRvCate.setAdapter(adapterLatest);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        mRvCate.setLayoutManager(layoutManager);
+            }
+        });
 
-
+//
+//        for (int i = 0; i < 40; i++) {
+//            modelLatestList.add(new ModelLatest( "", "", i + "", i + ""));
+//        }
+//
+//        Log.e("size", load.size() + "");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        FloatingActionButton fab = findViewById(R.id.fab);
@@ -61,7 +84,6 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -93,7 +115,6 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
 //
 //        return super.onOptionsItemSelected(item);
 //    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -124,4 +145,25 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+//    public void getData(int embed){
+//        Hdwallpaper_Retrofit.getInstance().getCate(embed)
+//                .enqueue(new Callback<List<Latestt>>() {
+//                    @Override
+//                    public void onResponse(Call<List<Latestt>> call, Response<List<Latestt>> response) {
+//                        Toast.makeText(LatestActivity.this, response.body().size() + "", Toast.LENGTH_SHORT).show();
+//
+//                        modelLatests.addAll(response.body());
+//                        adapterLatest.notifyDataSetChanged();
+//                        Log.e("hahahaha",modelLatests+"");
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<List<Latestt>> call, Throwable t) {
+//
+//                    }
+//                });
+//
+//    }
 }
