@@ -33,7 +33,8 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_latest, viewGroup,false));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.item_latest, viewGroup,false));
     }
 
     @Override
@@ -45,7 +46,8 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
 //        viewHolder.tvCountEye.setText(md.getTvCountEye());
         if (modelLatestList !=null) {
             Latestt post = modelLatestList.get(i);
-            Picasso.with(context).load(post.getGuid().getRendered()).into(viewHolder.imgContent);
+            Picasso.with(context).load(post.getGuid().getRendered())
+                    .into(viewHolder.imgContent);
             Log.e("lala",post.getGuid().getRendered()+"");
         }
 

@@ -48,28 +48,31 @@
         android:layout_height="wrap_content">
 
         <com.github.clans.fab.FloatingActionButton
-            android:src="@drawable/eye_icon_grid_view"
+            android:src="@drawable/icon_heart"
             app:fab_colorNormal="#B5000000"
             android:layout_width="8dp"
+            android:id="@+id/btnheart"
             android:layout_height="8dp" />
         <com.github.clans.fab.FloatingActionButton
             app:fab_label="Share"
             app:fab_colorNormal="#B5000000"
-            android:src="@drawable/eye_icon_grid_view"
+            android:src="@drawable/icon_share_small"
             android:layout_width="24dp"
-            android:layout_height="24dp" />
+            android:layout_height="24dp"
+            android:id="@+id/btnshare"/>
         <com.github.clans.fab.FloatingActionButton
-            android:src="@drawable/eye_icon_grid_view"
+            android:src="@drawable/icon_save_image_small"
             app:fab_colorNormal="#B5000000"
             app:fab_label="Save Image"
             android:layout_width="24dp"
-            android:layout_height="24dp" />
+            android:layout_height="24dp"
+            android:id="@+id/btnsave"/>
         <com.github.clans.fab.FloatingActionButton
-            android:src="@drawable/eye_icon_grid_view"
+            android:src="@drawable/icon_set_as_wallpaper_small"
             app:fab_label="Set As Wallpaper"
             app:fab_colorNormal="#B5000000"
             android:layout_width="24dp"
-            android:id="@+id/btnsetas"
+            android:id="@+id/btnsetbg"
             android:layout_height="24dp" />
     </com.github.clans.fab.FloatingActionMenu>
 

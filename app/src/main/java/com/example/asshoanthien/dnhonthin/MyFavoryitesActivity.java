@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterFavorites;
+import com.example.asshoanthien.dnhonthin.database.DAO;
 import com.example.asshoanthien.dnhonthin.model.ModelFavorites;
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,23 +26,19 @@ public class MyFavoryitesActivity extends AppCompatActivity  implements  Navigat
     private RecyclerView mRvFavorites;
     private List<ModelFavorites> modelFavoritesList;
     private AdapterFavorites adapterFavorites;
-
+    private DAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_favoryites);
-
+        dao=new DAO(this);
+        dao.open();
         mRvFavorites=findViewById(R.id.rvlatest);
         modelFavoritesList = new ArrayList<>();
-
-        for (int i = 0; i < 3; i++) {
-            modelFavoritesList.add(new ModelFavorites("", "", "", i + "", i + ""));
-        }
-
-
-        adapterFavorites = new AdapterFavorites(modelFavoritesList);
-        mRvFavorites.setAdapter(adapterFavorites);
+        modelFavoritesList=dao.getData();
         mRvFavorites.setLayoutManager(new GridLayoutManager(this, 2));
+        adapterFavorites = new AdapterFavorites(modelFavoritesList,this);
+        mRvFavorites.setAdapter(adapterFavorites);
 
 
 

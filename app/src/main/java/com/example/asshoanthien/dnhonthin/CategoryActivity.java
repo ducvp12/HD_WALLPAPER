@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CategoryActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,ItemClickListener {
     int _embedded;
     LinearLayoutManager linearLayoutManager;
 
@@ -43,7 +43,6 @@ public class CategoryActivity extends AppCompatActivity
     SwipeRefreshLayout f5;
     List<Category>   categories;
     CateAdapter cateAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +207,10 @@ public void getData(int page, int per_page){
         return true;
     }
 
+    @Override
+    public void onClick(int view, int position) {
+
+    }
 
 
 //    public void getData(int _embedded){

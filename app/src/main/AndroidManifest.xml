@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.asshoanthien.dnhonthin">
-<uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_WALLPAPER" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity"
+        <activity android:name=".PostOfCate"></activity>
+        <activity android:name=".FragmentPostOfCate" />
+        <activity
+            android:name=".HomeActivity"
             android:label="Home"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ImageDetailActivity" />
         <activity
             android:name=".AboutUsActivity"
