@@ -1,7 +1,7 @@
 package com.example.asshoanthien.dnhonthin.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.asshoanthien.dnhonthin.FragmentPostOfCate;
 import com.example.asshoanthien.dnhonthin.ItemClickListener;
 import com.example.asshoanthien.dnhonthin.R;
 import com.example.asshoanthien.dnhonthin.model.model_cate.Category;
@@ -20,10 +19,10 @@ public class CateAdapter extends RecyclerView.Adapter<CateHolder> {
     private Context context;
     private List<Category> cateList;
     private ItemClickListener mitemClickRv;
-    public CateAdapter(Context context, List<Category> cateList) {
+    public CateAdapter(Context context, List<Category> cateList,ItemClickListener itemClickRv) {
         this.context = context;
         this.cateList = cateList;
-
+        mitemClickRv=itemClickRv;
     }
 
     @NonNull
@@ -41,11 +40,11 @@ public class CateAdapter extends RecyclerView.Adapter<CateHolder> {
         holder.tvContent.setText(category.getName());
         holder.tvsl.setText("("+category.getCount()+")");
         final int id = category.getId();
+        Log.e("lolo", cateList.size()+"");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, FragmentPostOfCate.class);
-                context.startActivity(intent);
+                mitemClickRv.onClick(position,id);
             }
         });
     }

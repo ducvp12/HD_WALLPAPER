@@ -28,4 +28,6 @@
     <string name="title">HD Wallpaper</string>
     <string name="contenAbout">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s</string>
     <string name="imgDetail">Image Detail</string>
+    <string name="mediaofpost">MediaOfPost</string>
+    <string name="postofcate">PostOfCate</string>
 </resources>

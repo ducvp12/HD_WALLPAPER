@@ -12,10 +12,10 @@
     app:cardElevation="6dp">
     <ImageView
         android:id="@+id/imgBanner"
-
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/hoa" />
+        android:src="@drawable/av" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_gravity="bottom"
@@ -25,18 +25,18 @@
         android:layout_margin="10dp"
 
         android:textSize="24sp"
-        android:textColor="#FC4B4B"
+        android:textColor="#FFF"
         android:text="@string/animals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvslcate"
-        android:textSize="24sp"
-        android:textColor="#FC4B4B"
-        android:layout_toRightOf="@+id/tvTitle"
-        android:layout_marginTop="10dp"
-        android:text="23"/>
+
+        <TextView
+            android:id="@+id/tvslcate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tvTitle"
+            android:textColor="#FFF"
+            android:textSize="24sp" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

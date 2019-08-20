@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PostOfCate2">
+    tools:context=".MediaOfPostActivity">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/imgBack"
+                android:onClick="back1"
                 android:layout_width="30dp"
-                android:onClick="back"
                 android:layout_height="30dp"
                 android:src="@drawable/arrow_left" />
 
@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"
-                android:text="@string/postofcate"
+                android:text="@string/mediaofpost"
                 android:textColor="@color/colorWhite"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -38,9 +38,9 @@
             android:layout_height="wrap_content" />
     </androidx.appcompat.widget.Toolbar>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvListPost2"
+        android:id="@+id/rvMedia"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
 
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

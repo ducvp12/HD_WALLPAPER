@@ -46,8 +46,7 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
 //        viewHolder.tvCountEye.setText(md.getTvCountEye());
         if (modelLatestList !=null) {
             Latestt post = modelLatestList.get(i);
-            Picasso.with(context).load(post.getGuid().getRendered())
-                    .into(viewHolder.imgContent);
+            Picasso.with(context).load(post.getGuid().getRendered()).into(viewHolder.imgContent);
             Log.e("lala",post.getGuid().getRendered()+"");
         }
 

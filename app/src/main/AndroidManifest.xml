@@ -12,8 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PostOfCate"></activity>
-        <activity android:name=".FragmentPostOfCate" />
+        <activity android:name=".MediaOfPostActivity"></activity>
+        <activity android:name=".PostOfCate2" />
+        <activity android:name=".ImageDetailActivity2" />
         <activity
             android:name=".HomeActivity"
             android:label="Home"

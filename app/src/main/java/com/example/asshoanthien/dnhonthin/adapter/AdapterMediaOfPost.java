@@ -1,6 +1,8 @@
 package com.example.asshoanthien.dnhonthin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.asshoanthien.dnhonthin.ImageDetailActivity2;
 import com.example.asshoanthien.dnhonthin.R;
 import com.example.asshoanthien.dnhonthin.model.modelmediaofpost.MediaOfPost;
 import com.squareup.picasso.Picasso;
@@ -35,20 +38,22 @@ public class AdapterMediaOfPost extends RecyclerView.Adapter<AdapterMediaOfPost.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         final Context context = viewHolder.itemView.getContext();
+        final MediaOfPost mediaOfPost2 = mediaOfPosts.get(i);
 
         if (mediaOfPosts!=null){
-            MediaOfPost mediaOfPost = mediaOfPosts.get(i);
-            Picasso.with(context).load(mediaOfPost.getSourceUrl()).into(viewHolder.imageView);
+            Picasso.with(context).load(mediaOfPost2.getSourceUrl()).into(viewHolder.imageView);
+            Log.e("juju",mediaOfPost2.getSourceUrl()+"");
+            Log.e("juju2",mediaOfPost2+"");
         }
 //
-//        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, ImageDetailActivity.class);
-//                intent.putExtra("position",i);
-//                context.startActivity(intent);
-//            }
-//        });
+        viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ImageDetailActivity2.class);
+                intent.putExtra("position",mediaOfPost2.getSourceUrl());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

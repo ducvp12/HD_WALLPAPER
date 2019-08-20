@@ -29,6 +29,8 @@ public class AdapterListPost extends RecyclerView.Adapter<AdapterListPost.ViewHo
         mitemClickRv = itemClickRv;
     }
 
+
+
     @NonNull
     @Override
     public AdapterListPost.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
