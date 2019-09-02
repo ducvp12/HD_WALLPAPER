@@ -47,8 +47,7 @@ public class CategoryActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        int ori=linearLayoutManager.HORIZONTAL;
-        boolean re=false;
+
         f5 = (SwipeRefreshLayout) findViewById(R.id.f5);
         lvList = (RecyclerView) findViewById(R.id.rv);
         categories=new ArrayList<>();
@@ -61,7 +60,9 @@ public class CategoryActivity extends AppCompatActivity
 
             }
         });
-        linearLayoutManager=new LinearLayoutManager(this,ori,re);
+        linearLayoutManager=new LinearLayoutManager(this);
+        //recycleview nam ngang
+
         lvList.setAdapter(cateAdapter);
         lvList.setLayoutManager(linearLayoutManager);
         getData(1,15);
@@ -120,7 +121,7 @@ public class CategoryActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-//    @Override
+    //    @Override
 //    public void onBackPressed() {
 //        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 //        if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -129,26 +130,26 @@ public class CategoryActivity extends AppCompatActivity
 //            super.onBackPressed();
 //        }
 //    }
-public void getData(int page, int per_page){
-    Hdwallpaper_Retrofit.getInstance().getCategpries(page, per_page)
-            .enqueue(new Callback<List<Category>>() {
-                @Override
-                public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-    //                Toast.makeText(CategoryActivity.this, response.body().size() + "", Toast.LENGTH_SHORT).show();
+    public void getData(int page, int per_page){
+        Hdwallpaper_Retrofit.getInstance().getCategpries(page, per_page)
+                .enqueue(new Callback<List<Category>>() {
+                    @Override
+                    public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                        //                Toast.makeText(CategoryActivity.this, response.body().size() + "", Toast.LENGTH_SHORT).show();
 
-                    categories.addAll(response.body());
-                    cateAdapter.notifyDataSetChanged();
-                    Log.e("hahahaha",categories+"");
-                    f5.setRefreshing(false);
-                }
+                        categories.addAll(response.body());
+                        cateAdapter.notifyDataSetChanged();
+                        Log.e("hahahaha",categories+"");
+                        f5.setRefreshing(false);
+                    }
 
-                @Override
-                public void onFailure(Call<List<Category>> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<List<Category>> call, Throwable t) {
 
-                }
-            });
+                    }
+                });
 
-}
+    }
 
     @Override
     public void onBackPressed() {
@@ -189,10 +190,10 @@ public void getData(int page, int per_page){
         int id = item.getItemId();
 
         if (id == R.id.nav_latest) {
-            // Handle the camera action
-            Intent intent=new Intent(CategoryActivity.this,LatestActivity.class);
-            startActivity(intent);
-            finish();
+
+//                Intent intent=new Intent(CategoryActivity.this,LatestActivity.class);
+//                startActivity(intent);
+//                finish();a
         } else if (id == R.id.nav_more) {
             Intent intent=new Intent(CategoryActivity.this,HomeActivity.class);
             startActivity(intent);

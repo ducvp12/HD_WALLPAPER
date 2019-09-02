@@ -4,24 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterLatest;
-import com.example.asshoanthien.dnhonthin.model.modelex.Photo;
+
+import com.example.asshoanthien.dnhonthin.model.modelLatest.Latestt;
 import com.example.asshoanthien.dnhonthin.retrofit.Hdwallpaper_Retrofit;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,42 +26,40 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LatestActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
-int page=1;
-int per_page=10;
+    int page=1;
+    int per_page=10;
     private RecyclerView mRvCate;
-     List<Photo> modelLatests;
+    List<Latestt> modelLatests;
     private AdapterLatest adapterLatest;
     SwipeRefreshLayout f5;
+
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latest);
 
-        f5 = (SwipeRefreshLayout) findViewById(R.id.f52);
-        mRvCate=findViewById(R.id.rvlatests2);
-        modelLatests=new ArrayList<>();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
-        adapterLatest = new AdapterLatest(modelLatests,LatestActivity.this);
-        mRvCate.setAdapter(adapterLatest);
-        mRvCate.setLayoutManager((new GridLayoutManager(this, 2)));
 
-        f5.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //lay du lieu
-                page=1;
-                modelLatests.clear();
-                getData2(page,per_page);
-            }
-        });
-
-        mRvCate.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                page=page+1;
-                getData2(page,per_page);
-            }
-        });
+        getData();
+//        f5.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                //lay du lieu
+//                page=1;
+//                modelLatests.clear();
+//                getData(page,per_page);
+//            }
+//        });
+//
+//        mRvCate.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+//            @Override
+//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+//                page=page+1;
+//                getData(page,per_page);
+//            }
+//        });
 
 
 //
@@ -92,28 +87,33 @@ int per_page=10;
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void  getData2 (int page, int per_page){
+    private void getData() {
 
-        Hdwallpaper_Retrofit.getInstance().getEx(page,per_page).enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                Log.e("code", "" + response.code());
-                if (response.code() == 200) {
-                    if (response.body() == null) return;
-                    modelLatests.addAll(response.body());
-                    adapterLatest.notifyDataSetChanged();
-                    Toast.makeText(LatestActivity.this, "hahaha", Toast.LENGTH_SHORT).show();
-                    f5.setRefreshing(false);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
 
-            }
-        });
+        Hdwallpaper_Retrofit.getInstance().getSourceUrl()
+                .enqueue(new Callback<List<Latestt>>() {
+                    @Override
+                    public void onResponse(Call<List<Latestt>> call, Response<List<Latestt>> response) {
+                        //                Toast.makeText(CategoryActivity.this, response.body().size() + "", Toast.LENGTH_SHORT).show();
+
+                        modelLatests.addAll(response.body());
+                        adapterLatest.notifyDataSetChanged();
+                        Log.e("hahahaha",modelLatests+"");
+                        f5.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Latestt>> call, Throwable t) {
+
+                    }
+                });
+
+
 
     }
+
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -131,7 +131,7 @@ int per_page=10;
 //        return true;
 //    }
 
-//    @Override
+    //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        // Handle action bar item clicks here. The action bar will
 //        // automatically handle clicks on the Home/Up button, so long

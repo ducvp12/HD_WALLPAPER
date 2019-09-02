@@ -29,7 +29,7 @@
             android:label="Categories"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CategoryActivity"
+            android:name=".LatestActivity"
             android:label="Cate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -40,7 +40,7 @@
             android:name=".SplashScreen"
             android:label="Category"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LatestActivity">
+        <activity android:name=".CategoryActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
