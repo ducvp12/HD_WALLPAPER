@@ -8,21 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.asshoanthien.dnhonthin.ImageDetailActivity;
 import com.example.asshoanthien.dnhonthin.R;
-import com.example.asshoanthien.dnhonthin.model.modelLatest.Latestt;
+import com.example.asshoanthien.dnhonthin.model.modelex.Photo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder> {
-    private List<Latestt> modelLatestList;
+    private List<Photo> modelLatestList;
     Context context;
-    public AdapterLatest(List<Latestt> modelLatestList, Context context) {
+    public AdapterLatest(List<Photo> modelLatestList, Context context) {
         this.modelLatestList = modelLatestList;
         this.context = context;
     }
@@ -45,9 +46,10 @@ public class AdapterLatest extends RecyclerView.Adapter<AdapterLatest.ViewHolder
 //        viewHolder.tvCOuntHeart.setText(md.getTvCountHeart());
 //        viewHolder.tvCountEye.setText(md.getTvCountEye());
         if (modelLatestList !=null) {
-            Latestt post = modelLatestList.get(i);
-            Picasso.with(context).load(post.getGuid().getRendered()).into(viewHolder.imgContent);
-            Log.e("lala",post.getGuid().getRendered()+"");
+            Photo post = modelLatestList.get(i);
+            Picasso.with(context).load(post.getUrlM()).into(viewHolder.imgContent);
+            Log.e("lala",post.getUrlM()+"");
+            Toast.makeText(context, post.getUrlM()+"", Toast.LENGTH_SHORT).show();
         }
 
         //                      .getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getMediumLarge().getSourceUrl()

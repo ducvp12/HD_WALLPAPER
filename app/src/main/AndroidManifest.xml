@@ -29,8 +29,8 @@
             android:label="Categories"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LatestActivity"
-            android:label="Latest"
+            android:name=".CategoryActivity"
+            android:label="Cate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MyFavoryitesActivity"
@@ -40,7 +40,8 @@
             android:name=".SplashScreen"
             android:label="Category"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CategoryActivity">
+        <activity android:name=".LatestActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

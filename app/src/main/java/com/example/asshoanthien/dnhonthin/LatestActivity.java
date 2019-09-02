@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +14,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.asshoanthien.dnhonthin.adapter.AdapterLatest;
-import com.example.asshoanthien.dnhonthin.model.modelLatest.Latestt;
+import com.example.asshoanthien.dnhonthin.model.modelex.Photo;
 import com.example.asshoanthien.dnhonthin.retrofit.Hdwallpaper_Retrofit;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,14 +29,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LatestActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
-
+int page=1;
+int per_page=10;
     private RecyclerView mRvCate;
-     List<Latestt> modelLatests;
+     List<Photo> modelLatests;
     private AdapterLatest adapterLatest;
+    SwipeRefreshLayout f5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_latest);
+
+        f5 = (SwipeRefreshLayout) findViewById(R.id.f52);
         mRvCate=findViewById(R.id.rvlatests2);
         modelLatests=new ArrayList<>();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
@@ -42,23 +48,24 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
         mRvCate.setAdapter(adapterLatest);
         mRvCate.setLayoutManager((new GridLayoutManager(this, 2)));
 
-        Hdwallpaper_Retrofit.getInstance().getSourceUrl().enqueue(new Callback<List<Latestt>>() {
+        f5.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onResponse(Call<List<Latestt>> call, Response<List<Latestt>> response) {
-                Log.e("code", "" + response.code());
-                if (response.code() == 200) {
-                    if (response.body() == null) return;
-                    modelLatests.addAll(response.body());
-                    adapterLatest.notifyDataSetChanged();
- //                   Log.e("abcde", "onResponse: " + response.body().get(0).getEmbedded().getWpFeaturedmedia().get(0).getMediaDetails().getSizes().getMediumLarge().getSourceUrl());
-                }
-            }
-            // ok
-            @Override
-            public void onFailure(Call<List<Latestt>> call, Throwable t) {
-
+            public void onRefresh() {
+                //lay du lieu
+                page=1;
+                modelLatests.clear();
+                getData2(page,per_page);
             }
         });
+
+        mRvCate.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                page=page+1;
+                getData2(page,per_page);
+            }
+        });
+
 
 //
 //        for (int i = 0; i < 40; i++) {
@@ -83,6 +90,29 @@ public class LatestActivity extends AppCompatActivity implements  NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public void  getData2 (int page, int per_page){
+
+        Hdwallpaper_Retrofit.getInstance().getEx(page,per_page).enqueue(new Callback<List<Photo>>() {
+            @Override
+            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+                Log.e("code", "" + response.code());
+                if (response.code() == 200) {
+                    if (response.body() == null) return;
+                    modelLatests.addAll(response.body());
+                    adapterLatest.notifyDataSetChanged();
+                    Toast.makeText(LatestActivity.this, "hahaha", Toast.LENGTH_SHORT).show();
+                    f5.setRefreshing(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Photo>> call, Throwable t) {
+
+            }
+        });
+
     }
     @Override
     public void onBackPressed() {

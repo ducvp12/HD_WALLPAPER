@@ -24,7 +24,11 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <!--<include layout="@layout/content_category" />-->
-
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/f52"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvlatests2"
 
@@ -33,6 +37,7 @@
             >
 
         </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
     <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
     <!--android:id="@+id/fab"-->

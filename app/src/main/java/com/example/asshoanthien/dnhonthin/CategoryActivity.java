@@ -139,7 +139,7 @@ public void getData(int page, int per_page){
                     categories.addAll(response.body());
                     cateAdapter.notifyDataSetChanged();
                     Log.e("hahahaha",categories+"");
-//                    f5.setRefreshing(false);
+                    f5.setRefreshing(false);
                 }
 
                 @Override
